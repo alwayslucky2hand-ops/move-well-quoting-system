@@ -35,25 +35,31 @@
 
         /* --- 訊息氣泡核心樣式 --- */
         .bubble { 
-            max-width: 88%; 
-            padding: 1rem 1.2rem; 
+            max-width: 90%; /* 稍微加寬以容納卡片佈局 */
+            padding: 0;     /* 移除內距，由內部容器控制 */
             border-radius: 1.2rem; 
             position: relative; 
             word-wrap: break-word; 
-            line-height: 1.7; 
+            line-height: 1.6; 
             font-size: 0.95rem; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden; /* 確保圓角不被內容切掉 */
         }
         
-        /* 使用者氣泡 (維持原版 Teal 色) */
+        .bubble-content {
+            padding: 1rem 1.2rem;
+        }
+
+        /* 使用者氣泡 */
         .bubble-user { 
             background-color: var(--brand-teal); 
             color: white; 
             border-bottom-right-radius: 0.25rem; 
             margin-left: auto; 
+            padding: 0.8rem 1.2rem; /* 使用者氣泡維持簡單 */
         }
         
-        /* AI 氣泡 (白色底) */
+        /* AI 氣泡 */
         .bubble-ai { 
             background-color: #ffffff; 
             color: var(--brand-text); 
@@ -62,39 +68,100 @@
             border: 1px solid #F3F4F6;
         }
 
-        /* --- Markdown 內容美化 (Teal 色系) --- */
+        /* --- Markdown 內容美化 (參照截圖排版) --- */
+        .ai-content {
+            font-size: 15px;
+            color: #374151;
+        }
+
+        /* 強調文字：模仿截圖的螢光筆效果 */
         .ai-content strong {
             color: var(--brand-teal); 
             font-weight: 700;
-            background-color: rgba(95, 160, 157, 0.1); 
+            background-color: rgba(95, 160, 157, 0.12); 
             padding: 0 4px;
             border-radius: 4px;
         }
-        .ai-content h3, .ai-content h4 {
+
+        /* 標題樣式 */
+        .ai-content h3 {
             font-size: 1.1em; 
             font-weight: 700; 
-            margin-top: 12px; 
+            margin-top: 16px; 
             margin-bottom: 8px;
-            color: var(--brand-text); 
-            border-left: 4px solid var(--brand-teal); 
-            padding-left: 10px; 
-            line-height: 1.4;
+            color: var(--brand-text);
+            display: flex;
+            align-items: center;
         }
+        .ai-content h3::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background-color: var(--brand-yellow);
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+
+        /* 列表樣式：模仿截圖的寬鬆條列 */
         .ai-content ul, .ai-content ol { 
-            margin-left: 20px; 
+            margin-left: 6px; 
             margin-bottom: 12px; 
-            list-style-type: disc; 
+            list-style: none; /* 移除預設樣式，自訂圓點 */
         }
-        .ai-content li { margin-bottom: 6px; }
-        .ai-content li::marker { color: var(--brand-yellow); font-weight: bold; } 
-        .ai-content hr { border-color: #F3F4F6; margin: 16px 0; border-width: 1px; }
+        .ai-content li { 
+            margin-bottom: 8px; 
+            position: relative;
+            padding-left: 18px;
+            line-height: 1.7;
+        }
+        /* 自訂黃色圓點 */
+        .ai-content li::before {
+            content: '●';
+            color: var(--brand-yellow);
+            font-size: 0.8em;
+            position: absolute;
+            left: 0;
+            top: 0px;
+        }
+
+        /* 引用塊：模仿截圖底部的「小提醒」灰色區塊 */
+        .ai-content blockquote {
+            background-color: #F9FAFB;
+            border-left: 4px solid var(--brand-teal);
+            margin: 16px 0;
+            padding: 12px 16px;
+            color: #6B7280;
+            font-size: 0.9em;
+            border-radius: 0 8px 8px 0;
+        }
+        
         .ai-content p { margin-bottom: 10px; }
         .ai-content p:last-child { margin-bottom: 0; }
+        
         .ai-content a { 
             color: var(--brand-teal); 
             text-decoration: underline; 
             text-underline-offset: 3px;
             font-weight: 500;
+        }
+
+        /* 互動式問題按鈕 (新功能) */
+        .suggestion-chip {
+            display: inline-block;
+            background-color: #FFFDF5;
+            border: 1px solid var(--brand-yellow);
+            color: var(--brand-text);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 4px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .suggestion-chip:hover {
+            background-color: var(--brand-yellow);
+            color: white;
         }
 
         /* 打字動畫 */
@@ -200,7 +267,7 @@
         // ============================================
         // ⚠️ 設定區：請填入您的 GAS 網頁應用程式網址 ⚠️
         // ============================================
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxtEldqlh-HPWm01T6cI8W0xVtOXCVPddT5JGeNTkmFWvkd6LvuMHbi0DrsyhsQMdw/exec"; // 請替換成您在部署後取得的網址
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxtEldqlh-HPWm01T6cI8W0xVtOXCVPddT5JGeNTkmFWvkd6LvuMHbi0DrsyhsQMdw/exec"; 
         // ============================================
         
         const loginScreen = document.getElementById('login-screen');
@@ -215,41 +282,61 @@
         let selectedImages = [];
         let currentRowId = null; 
 
-        // 歡迎訊息 (整合 Markdown 樣式 與 變數隔離圖片)
+        // 歡迎訊息 (重建 HTML 結構以符合截圖的卡片式設計)
         function showWelcomeMessage() {
-            // 定義變數，防止任何空白或換行符號污染 URL
             const imgUrl1 = "https://i.meee.com.tw/LbBMY7T.png";
             const imgUrl2 = "https://i.meee.com.tw/xAtt8vm.png";
-            
-            const welcomeText = `
-### 👋 嗨！我是搬家小岳
-不管是 **搬家費用**、**流程**、**打包技巧**，或是 **日子風水**，都可以問我喔！
-
----
-您可以直接 **傳送現場照片** 📸 給我，我會幫您看：
-* 需要幾車？
-* 怎麼打包？
-* 有沒有需要特殊防護？
-`;
             
             const div = document.createElement('div');
             div.className = `flex w-full fade-in justify-start`;
             
-            // 使用變數嵌入 (${imgUrl1})，這是最安全的做法
+            // 使用更豐富的 HTML 結構來模仿截圖的排版
             div.innerHTML = `
                 <div class="w-full">
                     <div class="bubble bubble-ai w-full">
-                        <div class="ai-content">${marked.parse(welcomeText)}</div>
+                        <div class="bg-[#FFFDF5] p-5 border-b border-gray-100">
+                            <h3 class="font-bold text-[#2B201A] text-lg flex items-center mb-2">
+                                👋 嗨！我是搬家小岳
+                            </h3>
+                            <p class="text-[#374151] text-sm leading-relaxed">
+                                不管是 <span class="font-bold text-[#5FA09D]">搬家費用</span>、<span class="font-bold text-[#5FA09D]">流程</span>、<span class="font-bold text-[#5FA09D]">打包技巧</span>，或是 <span class="font-bold text-[#5FA09D]">日子風水</span>，都可以問我喔！
+                            </p>
+                        </div>
                         
-                        <div class="mt-3 mb-1 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-                             <p class="text-xs text-[#5FA09D] font-bold mb-2 flex items-center uppercase tracking-wide">
+                        <div class="p-5 pb-2">
+                            <p class="text-sm font-bold text-[#2B201A] mb-3 flex items-center">
+                                您可以直接 <span class="bg-gray-100 px-2 py-0.5 rounded text-[#2B201A] mx-1">傳送現場照片 📸</span> 給我，我會幫您看：
+                            </p>
+                            <ul class="space-y-2 mb-4">
+                                <li class="text-sm text-[#4B5563] flex items-center">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#F4D35E] mr-2"></span> 需要幾車？
+                                </li>
+                                <li class="text-sm text-[#4B5563] flex items-center">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#F4D35E] mr-2"></span> 怎麼打包？
+                                </li>
+                                <li class="text-sm text-[#4B5563] flex items-center">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#F4D35E] mr-2"></span> 有沒有需要特殊防護？
+                                </li>
+                            </ul>
+                            
+                            <div class="mt-4 mb-2">
+                                <p class="text-xs text-gray-400 mb-2">您可以試著問我這些問題：</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="suggestion-chip" onclick="fillInput('搬家費用大概怎麼算？')">搬家費用大概怎麼算？</span>
+                                    <span class="suggestion-chip" onclick="fillInput('大型家具有拆裝服務嗎？')">大型家具有拆裝服務嗎？</span>
+                                    <span class="suggestion-chip" onclick="fillInput('有提供打包紙箱嗎？')">有提供打包紙箱嗎？</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 pt-3 border-t border-gray-100">
+                             <p class="text-xs text-[#5FA09D] font-bold mb-3 flex items-center uppercase tracking-wide">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                 熱門詢問：一車多少錢？
                             </p>
                             <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar snap-x cursor-pointer">
-                                <img src="${imgUrl1}" class="w-[220px] h-auto flex-shrink-0 rounded-lg shadow-sm snap-center border border-gray-200 hover:opacity-95 transition" onclick="window.open(this.src, '_blank')" alt="搬家費用說明圖1">
-                                
-                                <img src="${imgUrl2}" class="w-[220px] h-auto flex-shrink-0 rounded-lg shadow-sm snap-center border border-gray-200 hover:opacity-95 transition" onclick="window.open(this.src, '_blank')" alt="搬家費用說明圖2">
+                                <img src="${imgUrl1}" class="w-[200px] h-auto flex-shrink-0 rounded-lg shadow-sm snap-center border border-gray-200 hover:opacity-95 transition" onclick="window.open(this.src, '_blank')" alt="搬家費用說明圖1">
+                                <img src="${imgUrl2}" class="w-[200px] h-auto flex-shrink-0 rounded-lg shadow-sm snap-center border border-gray-200 hover:opacity-95 transition" onclick="window.open(this.src, '_blank')" alt="搬家費用說明圖2">
                             </div>
                             <p class="text-[10px] text-gray-400 text-center mt-1">💡 左右滑動查看 / 點擊放大</p>
                         </div>
@@ -258,6 +345,13 @@
             chatContainer.appendChild(div);
         }
         
+        // 點擊建議問題時自動帶入
+        function fillInput(text) {
+            messageInput.value = text;
+            messageInput.style.height = 'auto'; // 重置高度
+            messageInput.focus();
+        }
+
         // 頁面載入時顯示歡迎訊息
         showWelcomeMessage();
 
@@ -306,7 +400,7 @@
             imageInput.value = '';
         });
 
-        // 訊息發送處理 (修改為 fetch 版本)
+        // 訊息發送處理
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = messageInput.value.trim();
@@ -352,7 +446,7 @@
                     method: 'POST',
                     body: JSON.stringify(payload),
                     headers: {
-                       'Content-Type': 'text/plain;charset=utf-8' // 避免觸發複雜的 CORS 預檢
+                       'Content-Type': 'text/plain;charset=utf-8'
                     }
                 })
                 .then(response => response.json())
@@ -363,8 +457,8 @@
                         throw new Error(response.error);
                     }
 
-                    // Markdown 解析回應
-                    const aiContentHtml = `<div class="ai-content">${marked.parse(response.text)}</div>`;
+                    // Markdown 解析回應 (注意這裡的 bubble-content class)
+                    const aiContentHtml = `<div class="ai-content bubble-content">${marked.parse(response.text)}</div>`;
                     appendMessage(`<div class="bubble bubble-ai">${aiContentHtml}</div>`, 'ai');
                     
                     if (response.rowId) currentRowId = response.rowId;
@@ -373,11 +467,11 @@
                 .catch(error => {
                     removeLoading(loadingId);
                     console.error('Error:', error);
-                    appendMessage(`<div class="bubble bubble-ai text-red-500">連線失敗，請檢查網路或稍後重試。<br><small>${error.message}</small></div>`, 'ai');
+                    appendMessage(`<div class="bubble bubble-ai text-red-500 bubble-content">連線失敗，請檢查網路或稍後重試。<br><small>${error.message}</small></div>`, 'ai');
                 });
             } else {
                  removeLoading(loadingId);
-                 appendMessage(`<div class="bubble bubble-ai text-red-500">系統設定錯誤：請檢查 GAS_API_URL 是否設定正確。</div>`, 'ai');
+                 appendMessage(`<div class="bubble bubble-ai text-red-500 bubble-content">系統設定錯誤：請檢查 GAS_API_URL 是否設定正確。</div>`, 'ai');
             }
         });
 
@@ -391,7 +485,7 @@
             const id = 'loading-' + Date.now();
             const div = document.createElement('div');
             div.id = id; div.className = 'flex w-full fade-in justify-start';
-            div.innerHTML = `<div class="bubble bubble-ai"><div class="flex items-center h-5 gap-1"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>`;
+            div.innerHTML = `<div class="bubble bubble-ai bubble-content"><div class="flex items-center h-5 gap-1"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>`;
             chatContainer.appendChild(div);
             return id;
         }
@@ -401,22 +495,15 @@
         // 重啟邏輯
         document.getElementById('restart-btn').addEventListener('click', () => { 
             if(confirm('確定要重新開始諮詢嗎？')) {
-                // 1. 清空資料
                 userData = { name: '', email: '' };
                 selectedImages = [];
                 currentRowId = null;
-                
-                // 2. 重置介面
                 loginForm.reset();
                 messageInput.value = '';
                 previewArea.innerHTML = '';
                 previewArea.classList.add('hidden');
-                
-                // 3. 把登入頁面滑回來
                 loginScreen.style.transform = 'translateY(0)';
-                
-                // 4. 重置對話內容
-                chatContainer.innerHTML = ''; // 清空舊對話
+                chatContainer.innerHTML = '';
                 showWelcomeMessage();
             }
         });
