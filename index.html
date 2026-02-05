@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>把家搬好 - 線上諮詢室</title>
@@ -29,37 +28,27 @@
             color: var(--brand-text);
         }
         
-        /* 隱藏 Scrollbar */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* --- 訊息氣泡核心樣式 --- */
         .bubble { 
-            max-width: 90%; /* 稍微加寬以容納卡片佈局 */
-            padding: 0;     /* 移除內距，由內部容器控制 */
+            max-width: 88%; 
+            padding: 1rem 1.2rem; 
             border-radius: 1.2rem; 
             position: relative; 
             word-wrap: break-word; 
-            line-height: 1.6; 
+            line-height: 1.7; 
             font-size: 0.95rem; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            overflow: hidden; /* 確保圓角不被內容切掉 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
-        .bubble-content {
-            padding: 1rem 1.2rem;
-        }
-
-        /* 使用者氣泡 */
         .bubble-user { 
             background-color: var(--brand-teal); 
             color: white; 
             border-bottom-right-radius: 0.25rem; 
             margin-left: auto; 
-            padding: 0.8rem 1.2rem; /* 使用者氣泡維持簡單 */
         }
         
-        /* AI 氣泡 */
         .bubble-ai { 
             background-color: #ffffff; 
             color: var(--brand-text); 
@@ -68,109 +57,25 @@
             border: 1px solid #F3F4F6;
         }
 
-        /* --- Markdown 內容美化 (參照截圖排版) --- */
-        .ai-content {
-            font-size: 15px;
-            color: #374151;
-        }
+        .ai-content strong { color: var(--brand-teal); font-weight: 700; background-color: rgba(95, 160, 157, 0.1); padding: 0 4px; border-radius: 4px; }
+        .ai-content h3, .ai-content h4 { font-size: 1.1em; font-weight: 700; margin-top: 12px; margin-bottom: 8px; color: var(--brand-text); border-left: 4px solid var(--brand-teal); padding-left: 10px; line-height: 1.4; }
+        .ai-content ul, .ai-content ol { margin-left: 20px; margin-bottom: 12px; list-style-type: disc; }
+        .ai-content li { margin-bottom: 6px; }
+        .ai-content a { color: var(--brand-teal); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
 
-        /* 強調文字：模仿截圖的螢光筆效果 */
-        .ai-content strong {
-            color: var(--brand-teal); 
-            font-weight: 700;
-            background-color: rgba(95, 160, 157, 0.12); 
-            padding: 0 4px;
-            border-radius: 4px;
-        }
-
-        /* 標題樣式 */
-        .ai-content h3 {
-            font-size: 1.1em; 
-            font-weight: 700; 
-            margin-top: 16px; 
-            margin-bottom: 8px;
-            color: var(--brand-text);
-            display: flex;
-            align-items: center;
-        }
-        .ai-content h3::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 16px;
-            background-color: var(--brand-yellow);
-            margin-right: 8px;
-            border-radius: 2px;
-        }
-
-        /* 列表樣式：模仿截圖的寬鬆條列 */
-        .ai-content ul, .ai-content ol { 
-            margin-left: 6px; 
-            margin-bottom: 12px; 
-            list-style: none; /* 移除預設樣式，自訂圓點 */
-        }
-        .ai-content li { 
-            margin-bottom: 8px; 
-            position: relative;
-            padding-left: 18px;
-            line-height: 1.7;
-        }
-        /* 自訂黃色圓點 */
-        .ai-content li::before {
-            content: '●';
-            color: var(--brand-yellow);
-            font-size: 0.8em;
-            position: absolute;
-            left: 0;
-            top: 0px;
-        }
-
-        /* 引用塊：模仿截圖底部的「小提醒」灰色區塊 */
-        .ai-content blockquote {
-            background-color: #F9FAFB;
-            border-left: 4px solid var(--brand-teal);
-            margin: 16px 0;
-            padding: 12px 16px;
-            color: #6B7280;
-            font-size: 0.9em;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .ai-content p { margin-bottom: 10px; }
-        .ai-content p:last-child { margin-bottom: 0; }
-        
-        .ai-content a { 
-            color: var(--brand-teal); 
-            text-decoration: underline; 
-            text-underline-offset: 3px;
-            font-weight: 500;
-        }
-
-        /* 互動式問題按鈕 (新功能) */
-        .suggestion-chip {
-            display: inline-block;
-            background-color: #FFFDF5;
-            border: 1px solid var(--brand-yellow);
-            color: var(--brand-text);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin: 4px 0;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .suggestion-chip:hover {
-            background-color: var(--brand-yellow);
-            color: white;
-        }
-
-        /* 打字動畫 */
         .typing-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #9CA3AF; animation: typing 1.4s infinite ease-in-out both; margin: 0 2px; }
         .typing-dot:nth-child(1) { animation-delay: -0.32s; }
         .typing-dot:nth-child(2) { animation-delay: -0.16s; }
         @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
         
-        /* 進場動畫 */
+        /* 錄音動畫 */
+        .recording-pulse { animation: pulse-red 1.5s infinite; }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
         .fade-in { animation: fadeIn 0.3s ease-out forwards; opacity: 0; transform: translateY(10px); }
         @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -223,8 +128,7 @@
             </button>
         </header>
 
-        <div id="chat-container" class="flex-1 overflow-y-auto p-4 space-y-5 scroll-smooth no-scrollbar pb-24">
-            </div>
+        <div id="chat-container" class="flex-1 overflow-y-auto p-4 space-y-5 scroll-smooth no-scrollbar pb-24"></div>
 
         <div class="bg-white border-t border-gray-100 p-3 sm:p-4 z-20 pb-safe space-y-3">
             
@@ -232,7 +136,6 @@
                 <div class="absolute top-0 right-0 -mt-4 -mr-4 text-[#5FA09D]/5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                 </div>
-                
                 <div class="flex items-center relative z-10">
                     <div class="bg-gradient-to-br from-[#5FA09D] to-[#4A8B89] text-white p-2.5 rounded-full mr-3 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
@@ -250,12 +153,25 @@
 
             <div id="preview-area" class="flex gap-3 mb-3 overflow-x-auto px-1 hidden pb-2"></div>
             
+            <div id="recording-status" class="hidden flex items-center justify-center p-2 text-red-500 text-sm font-bold animate-pulse">
+                <span>🔴 錄音中... 再次點擊結束 (將暫存)</span>
+            </div>
+
             <form id="chat-form" class="relative flex items-end gap-2 bg-gray-50 p-1.5 rounded-[1.5rem] border border-gray-200 focus-within:ring-2 focus-within:ring-[#F4D35E] focus-within:border-[#F4D35E] transition-all">
+                
                 <label class="p-2.5 text-gray-400 hover:text-[#5FA09D] cursor-pointer transition rounded-full hover:bg-gray-200 shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                     <input type="file" id="image-input" accept="image/*" multiple class="hidden">
                 </label>
+                
+                <button type="button" id="mic-btn" class="p-2.5 text-gray-400 hover:text-red-500 cursor-pointer transition rounded-full hover:bg-gray-200 shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                </button>
+
                 <textarea id="message-input" rows="1" class="flex-1 bg-transparent border-0 py-3 px-2 focus:ring-0 text-[#2B201A] text-base placeholder-gray-400 resize-none max-h-32 leading-6" placeholder="輸入訊息..."></textarea>
+                
                 <button type="submit" id="send-btn" class="p-2.5 bg-[#5FA09D] text-white rounded-full hover:bg-[#4A8B89] shadow-md transform active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 translate-x-0.5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" /></svg>
                 </button>
@@ -264,12 +180,9 @@
     </main>
 
     <script>
-        // ============================================
-        // ⚠️ 設定區：請填入您的 GAS 網頁應用程式網址 ⚠️
-        // ============================================
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxtEldqlh-HPWm01T6cI8W0xVtOXCVPddT5JGeNTkmFWvkd6LvuMHbi0DrsyhsQMdw/exec"; 
-        // ============================================
-        
+        // ★★★ 請將您的 GAS 網頁應用程式網址填入這裡 ★★★
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbw5iZDojslvlkgU4_a2rx1KZV5uaUv1UMgS_nptShxqjOr8mFh1rcSaGhT3sNrprBEN/exec"; 
+
         const loginScreen = document.getElementById('login-screen');
         const loginForm = document.getElementById('login-form');
         const chatForm = document.getElementById('chat-form');
@@ -278,65 +191,38 @@
         const imageInput = document.getElementById('image-input');
         const previewArea = document.getElementById('preview-area');
         
+        const micBtn = document.getElementById('mic-btn');
+        const recordingStatus = document.getElementById('recording-status');
+        
         let userData = { name: '', email: '' };
         let selectedImages = [];
         let currentRowId = null; 
+        
+        // 錄音變數
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let pendingAudioBlob = null; // 暫存錄音檔
 
-        // 歡迎訊息 (重建 HTML 結構以符合截圖的卡片式設計)
         function showWelcomeMessage() {
             const imgUrl1 = "https://i.meee.com.tw/LbBMY7T.png";
             const imgUrl2 = "https://i.meee.com.tw/xAtt8vm.png";
+            const welcomeText = `### 👋 嗨！我是搬家小岳\n不管是 **搬家費用**、**流程**、**打包技巧**，或是 **日子風水**，都可以問我喔！\n\n---\n您可以同時 **上傳照片** 📸、**錄音說明** 🎙️ 和 **打字**，全部準備好再一次發送，我會綜合起來幫您看！`;
             
             const div = document.createElement('div');
             div.className = `flex w-full fade-in justify-start`;
-            
-            // 使用更豐富的 HTML 結構來模仿截圖的排版
             div.innerHTML = `
                 <div class="w-full">
                     <div class="bubble bubble-ai w-full">
-                        <div class="bg-[#FFFDF5] p-5 border-b border-gray-100">
-                            <h3 class="font-bold text-[#2B201A] text-lg flex items-center mb-2">
-                                👋 嗨！我是搬家小岳
-                            </h3>
-                            <p class="text-[#374151] text-sm leading-relaxed">
-                                不管是 <span class="font-bold text-[#5FA09D]">搬家費用</span>、<span class="font-bold text-[#5FA09D]">流程</span>、<span class="font-bold text-[#5FA09D]">打包技巧</span>，或是 <span class="font-bold text-[#5FA09D]">日子風水</span>，都可以問我喔！
-                            </p>
-                        </div>
-                        
-                        <div class="p-5 pb-2">
-                            <p class="text-sm font-bold text-[#2B201A] mb-3 flex items-center">
-                                您可以直接 <span class="bg-gray-100 px-2 py-0.5 rounded text-[#2B201A] mx-1">傳送現場照片 📸</span> 給我，我會幫您看：
-                            </p>
-                            <ul class="space-y-2 mb-4">
-                                <li class="text-sm text-[#4B5563] flex items-center">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-[#F4D35E] mr-2"></span> 需要幾車？
-                                </li>
-                                <li class="text-sm text-[#4B5563] flex items-center">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-[#F4D35E] mr-2"></span> 怎麼打包？
-                                </li>
-                                <li class="text-sm text-[#4B5563] flex items-center">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-[#F4D35E] mr-2"></span> 有沒有需要特殊防護？
-                                </li>
-                            </ul>
-                            
-                            <div class="mt-4 mb-2">
-                                <p class="text-xs text-gray-400 mb-2">您可以試著問我這些問題：</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="suggestion-chip" onclick="fillInput('搬家費用大概怎麼算？')">搬家費用大概怎麼算？</span>
-                                    <span class="suggestion-chip" onclick="fillInput('大型家具有拆裝服務嗎？')">大型家具有拆裝服務嗎？</span>
-                                    <span class="suggestion-chip" onclick="fillInput('有提供打包紙箱嗎？')">有提供打包紙箱嗎？</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 p-4 pt-3 border-t border-gray-100">
-                             <p class="text-xs text-[#5FA09D] font-bold mb-3 flex items-center uppercase tracking-wide">
+                        <div class="ai-content">${marked.parse(welcomeText)}</div>
+                        <div class="mt-3 mb-1 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                             <p class="text-xs text-[#5FA09D] font-bold mb-2 flex items-center uppercase tracking-wide">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                 熱門詢問：一車多少錢？
                             </p>
                             <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar snap-x cursor-pointer">
-                                <img src="${imgUrl1}" class="w-[200px] h-auto flex-shrink-0 rounded-lg shadow-sm snap-center border border-gray-200 hover:opacity-95 transition" onclick="window.open(this.src, '_blank')" alt="搬家費用說明圖1">
-                                <img src="${imgUrl2}" class="w-[200px] h-auto flex-shrink-0 rounded-lg shadow-sm snap-center border border-gray-200 hover:opacity-95 transition" onclick="window.open(this.src, '_blank')" alt="搬家費用說明圖2">
+                                <img src="${imgUrl1}" class="w-[220px] h-auto flex-shrink-0 rounded-lg shadow-sm snap-center border border-gray-200 hover:opacity-95 transition" onclick="window.open(this.src, '_blank')">
+                                <img src="${imgUrl2}" class="w-[220px] h-auto flex-shrink-0 rounded-lg shadow-sm snap-center border border-gray-200 hover:opacity-95 transition" onclick="window.open(this.src, '_blank')">
                             </div>
                             <p class="text-[10px] text-gray-400 text-center mt-1">💡 左右滑動查看 / 點擊放大</p>
                         </div>
@@ -344,38 +230,25 @@
                 </div>`;
             chatContainer.appendChild(div);
         }
-        
-        // 點擊建議問題時自動帶入
-        function fillInput(text) {
-            messageInput.value = text;
-            messageInput.style.height = 'auto'; // 重置高度
-            messageInput.focus();
-        }
-
-        // 頁面載入時顯示歡迎訊息
         showWelcomeMessage();
 
-        // 登入處理
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('user-name').value.trim();
             const email = document.getElementById('user-email').value.trim();
             if(name && email) {
                 userData = { name, email };
-                // 向上滑動隱藏登入頁
                 loginScreen.style.transform = 'translateY(-100%)';
                 setTimeout(() => messageInput.focus(), 600);
             }
         });
 
-        // 輸入框自動高度
         messageInput.addEventListener('input', function() {
             this.style.height = 'auto';
             const newHeight = Math.min(this.scrollHeight, 120);
             this.style.height = newHeight + 'px';
         });
 
-        // 圖片上傳處理
         imageInput.addEventListener('change', (e) => {
             const files = Array.from(e.target.files);
             if(files.length + selectedImages.length > 5) { alert('最多 5 張圖片'); return; }
@@ -389,91 +262,187 @@
                     imgWrapper.querySelector('button').onclick = () => {
                         imgWrapper.remove();
                         selectedImages = selectedImages.filter(img => img.file !== file);
-                        if(selectedImages.length === 0) previewArea.classList.add('hidden');
+                        updatePreview();
                     };
                     previewArea.appendChild(imgWrapper);
-                    previewArea.classList.remove('hidden');
                     selectedImages.push({ file: file, base64: event.target.result.split(',')[1], mimeType: file.type });
+                    updatePreview();
                 };
                 reader.readAsDataURL(file);
             });
             imageInput.value = '';
         });
 
-        // 訊息發送處理
-        chatForm.addEventListener('submit', async (e) => {
+        // 錄音邏輯 (修改：不自動發送，而是暫存)
+        micBtn.addEventListener('click', async () => {
+            if (pendingAudioBlob) {
+                if(!confirm("您已經有一段錄音等待發送，確定要重新錄製嗎？舊的錄音將會被刪除。")) return;
+                pendingAudioBlob = null;
+                updatePreview();
+            }
+
+            if (!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm;codecs=opus', bitsPerSecond: 32000 });
+                    audioChunks = [];
+                    mediaRecorder.ondataavailable = event => { if (event.data.size > 0) audioChunks.push(event.data); };
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        pendingAudioBlob = audioBlob; // 存入全域變數
+                        updatePreview(); // 更新介面顯示
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+                    mediaRecorder.start();
+                    isRecording = true;
+                    micBtn.classList.add('recording-pulse', 'text-red-500', 'bg-red-50');
+                    recordingStatus.classList.remove('hidden');
+                    messageInput.placeholder = "錄音中... (點擊麥克風停止)";
+                    messageInput.disabled = true;
+                } catch (err) {
+                    // GitHub Pages 上這裡會正常運作，只要是用 HTTPS
+                    alert("無法存取麥克風，請確認瀏覽器權限。");
+                }
+            } else {
+                mediaRecorder.stop();
+                isRecording = false;
+                micBtn.classList.remove('recording-pulse', 'text-red-500', 'bg-red-50');
+                recordingStatus.classList.add('hidden');
+                messageInput.placeholder = "輸入訊息...";
+                messageInput.disabled = false;
+                messageInput.focus();
+            }
+        });
+
+        // 更新預覽區 (同時顯示圖片和錄音檔)
+        function updatePreview() {
+            if (selectedImages.length === 0 && !pendingAudioBlob) {
+                previewArea.classList.add('hidden');
+            } else {
+                previewArea.classList.remove('hidden');
+            }
+
+            const existingAudio = document.getElementById('audio-preview-item');
+            if (existingAudio) existingAudio.remove();
+
+            if (pendingAudioBlob) {
+                const audioWrapper = document.createElement('div');
+                audioWrapper.id = 'audio-preview-item';
+                audioWrapper.className = 'relative flex-shrink-0 flex items-center justify-center w-16 h-16 bg-red-50 rounded-xl border border-red-200 shadow-sm';
+                audioWrapper.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                    <button type="button" class="absolute -top-1.5 -right-1.5 bg-[#2B201A] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow border border-white">&times;</button>
+                `;
+                audioWrapper.querySelector('button').onclick = () => {
+                    pendingAudioBlob = null;
+                    updatePreview();
+                };
+                previewArea.appendChild(audioWrapper);
+            }
+        }
+
+        // 發送邏輯 (處理混合資料)
+        chatForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const text = messageInput.value.trim();
-            if (!text && selectedImages.length === 0) return;
+            
+            if (isRecording) {
+                micBtn.click();
+                setTimeout(()=>alert("錄音已結束並暫存，請再次點擊「發送」按鈕。"), 300);
+                return;
+            }
 
-            // UI 顯示
+            if (!text && selectedImages.length === 0 && !pendingAudioBlob) return;
+
+            // 1. 準備 UI 顯示
             let userHtml = '';
             if (selectedImages.length > 0) {
                 userHtml += `<div class="flex gap-2 mb-2 flex-wrap justify-end">`;
                 selectedImages.forEach(img => { userHtml += `<img src="data:${img.mimeType};base64,${img.base64}" class="w-28 h-28 object-cover rounded-xl border-2 border-white shadow-sm">`; });
                 userHtml += `</div>`;
             }
+            if (pendingAudioBlob) {
+                userHtml += `<div class="flex justify-end mb-2"><div class="bg-red-50 text-red-500 px-3 py-2 rounded-xl flex items-center gap-2 text-sm font-bold border border-red-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg> 語音訊息 (AI 聆聽中...)</div></div>`;
+            }
             if (text) userHtml += `<div class="bubble bubble-user">${text.replace(/\n/g, '<br>')}</div>`;
             appendMessage(userHtml, 'user');
 
+            // 2. 清空輸入區
             messageInput.value = '';
             messageInput.style.height = 'auto';
             previewArea.innerHTML = '';
             previewArea.classList.add('hidden');
             
-            const imagesToSend = selectedImages.map(img => ({
-                mimeType: img.mimeType,
-                base64: img.base64
-            }));
-            
-            selectedImages = [];
-            
+            // 3. 準備資料傳送
+            const imagesToSend = selectedImages.map(img => ({ mimeType: img.mimeType, base64: img.base64 }));
+            selectedImages = []; // 清空
+
+            // 處理語音 Blob 轉 Base64
+            if (pendingAudioBlob) {
+                const reader = new FileReader();
+                reader.readAsDataURL(pendingAudioBlob);
+                reader.onloadend = () => {
+                    const base64Audio = reader.result.split(',')[1];
+                    const mimeType = pendingAudioBlob.type;
+                    const audioData = { base64: base64Audio, mimeType: mimeType };
+                    
+                    // 全部準備好，發送！
+                    handleBackendCall(text, imagesToSend, audioData);
+                    pendingAudioBlob = null; // 清空
+                };
+            } else {
+                // 沒有語音，直接發送
+                handleBackendCall(text, imagesToSend, null);
+            }
+        });
+
+        // 🟢 核心修改：使用 Fetch API 呼叫 GitHub
+        function handleBackendCall(text, images, audioData) {
+            if (GAS_API_URL.includes("您的ID")) {
+                alert("請先在程式碼中填入正確的 Google Apps Script 網址 (GAS_API_URL)！");
+                return;
+            }
+
             const loadingId = appendLoading();
             scrollToBottom();
 
-            // 準備傳送給 GAS 的資料
-            const payload = {
-                name: userData.name,
-                email: userData.email,
-                message: text,
-                images: imagesToSend,
-                rowId: currentRowId
+            const payload = { 
+                name: userData.name, 
+                email: userData.email, 
+                message: text, 
+                images: images, 
+                audio: audioData, 
+                rowId: currentRowId 
             };
 
-            // 使用 fetch 呼叫 GAS 後端
-            if(GAS_API_URL.includes("exec")) {
-                fetch(GAS_API_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload),
-                    headers: {
-                       'Content-Type': 'text/plain;charset=utf-8'
-                    }
-                })
-                .then(response => response.json())
-                .then(response => {
-                    removeLoading(loadingId);
-                    
-                    if(response.error) {
-                        throw new Error(response.error);
-                    }
+            fetch(GAS_API_URL, {
+                method: "POST",
+                // 使用 text/plain 可以避免部分 CORS 預檢請求問題，GAS 會自動解析
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(response => {
+                removeLoading(loadingId);
+                
+                if (response.error) {
+                     appendMessage(`<div class="bubble bubble-ai text-red-500">系統錯誤：${response.error}</div>`, 'ai');
+                     return;
+                }
 
-                    // Markdown 解析回應 (注意這裡的 bubble-content class)
-                    const aiContentHtml = `<div class="ai-content bubble-content">${marked.parse(response.text)}</div>`;
-                    appendMessage(`<div class="bubble bubble-ai">${aiContentHtml}</div>`, 'ai');
-                    
-                    if (response.rowId) currentRowId = response.rowId;
-                    scrollToBottom();
-                })
-                .catch(error => {
-                    removeLoading(loadingId);
-                    console.error('Error:', error);
-                    appendMessage(`<div class="bubble bubble-ai text-red-500 bubble-content">連線失敗，請檢查網路或稍後重試。<br><small>${error.message}</small></div>`, 'ai');
-                });
-            } else {
-                 removeLoading(loadingId);
-                 appendMessage(`<div class="bubble bubble-ai text-red-500 bubble-content">系統設定錯誤：請檢查 GAS_API_URL 是否設定正確。</div>`, 'ai');
-            }
-        });
+                const aiContentHtml = `<div class="ai-content">${marked.parse(response.text)}</div>`;
+                appendMessage(`<div class="bubble bubble-ai">${aiContentHtml}</div>`, 'ai');
+                if (response.rowId) currentRowId = response.rowId;
+                scrollToBottom();
+            })
+            .catch(error => {
+                removeLoading(loadingId);
+                appendMessage(`<div class="bubble bubble-ai text-red-500">連線失敗，請檢查網路或後端部署狀態。<br><small>${error.message}</small></div>`, 'ai');
+                console.error("Fetch Error:", error);
+            });
+        }
 
         function appendMessage(htmlContent, type) {
             const div = document.createElement('div');
@@ -485,25 +454,25 @@
             const id = 'loading-' + Date.now();
             const div = document.createElement('div');
             div.id = id; div.className = 'flex w-full fade-in justify-start';
-            div.innerHTML = `<div class="bubble bubble-ai bubble-content"><div class="flex items-center h-5 gap-1"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>`;
+            div.innerHTML = `<div class="bubble bubble-ai"><div class="flex items-center h-5 gap-1"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>`;
             chatContainer.appendChild(div);
             return id;
         }
         function removeLoading(id) { const el = document.getElementById(id); if(el) el.remove(); }
         function scrollToBottom() { setTimeout(() => { chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' }); }, 100); }
         
-        // 重啟邏輯
         document.getElementById('restart-btn').addEventListener('click', () => { 
             if(confirm('確定要重新開始諮詢嗎？')) {
                 userData = { name: '', email: '' };
                 selectedImages = [];
+                pendingAudioBlob = null; // 清空
                 currentRowId = null;
                 loginForm.reset();
                 messageInput.value = '';
                 previewArea.innerHTML = '';
                 previewArea.classList.add('hidden');
                 loginScreen.style.transform = 'translateY(0)';
-                chatContainer.innerHTML = '';
+                chatContainer.innerHTML = ''; 
                 showWelcomeMessage();
             }
         });
